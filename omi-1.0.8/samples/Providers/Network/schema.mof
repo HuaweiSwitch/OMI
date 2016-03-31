@@ -1,0 +1,4 @@
+
+class OMI_NetworkVLAN : CIM_NetworkVLAN
+{
+};

@@ -1,0 +1,39 @@
+// ===============================================================
+//  MSFT_MACTableEntry
+// ===============================================================
+	[Description ( "MSFT_MACTableEntry contain an entry of the Switches MAC Table." ), 
+	Version ( ".7" )]
+class MSFT_MACTableEntry : CIM_ManagedElement 
+{
+
+[Key, Override ( "InstanceID" ), 
+       Description ( 
+          "InstanceID is an optional property that shall be used to "
+          "opaquely and uniquely identify an instance of this class "
+          "within the scope of the instantiating Namespace."
+           )]
+   string InstanceID;
+
+
+   [Description ( 
+          "A MAC address displayed as three groups of four hexadecimal digits separated by dots (.) (e.g. 0123.4567.89ab ), " 
+		  )]
+   string MACAddress;
+
+   [Description ("VLANId associated with the entry")]
+   string VLANId;
+
+   [Description ("Entry type distinquishes between static and dynamic configured entries")
+     , 
+       ValueMap { "2", "3"}, 
+       Values {  "Static", "Dynamic" }]
+   uint16 EntryType;
+
+   [Description ("The Device ID of the Ethernet port or Port channel. For example E0/1"),
+   ModelCorrespondence { 
+          "CIM_EthernetPort.DeviceID" }]
+   string InterfaceName;
+
+   [Description ("MAC address table aging time")]
+   uint32 Age;
+};

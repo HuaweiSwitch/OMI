@@ -1,0 +1,52 @@
+// ===============================================================
+//  MSFT_NetworkVLAN
+// ===============================================================
+	[Description ( "MSFT_NetworkVLAN description." ), 
+	Version ( "0.70" )]
+class MSFT_NetworkVLAN: CIM_NetworkVLAN
+{
+
+[Description ("IsEnabled is Used to enable-disable a VLAN. While disabled the VLAN can"
+               "maintain any associated policies")]
+boolean IsEnabled;
+
+
+ [Description ( 
+          "Set state of NetworkVLAN"
+		    "0 = Active"
+			"1 = suspended"
+           ), 
+       ValueMap { "0",  "1" 
+           }, 
+       Values { "Active", "Suspended" }]
+       uint32 State;
+
+
+	   [Description ( 
+          "PrivateVLANType can be set to Not Private, Primary, Community, Isolated"
+		    "0 - Not private"
+			"2 - Primary"
+			"3 - Community"
+			" - Isolated"
+           ), 
+       ValueMap { "0",   "2" , "3" , "4" 
+           }, 
+       Values { "Not Private", "Primary", "Community", "Isolated" }]
+       uint32 PrivateVLANType;
+
+
+	   [Description ("If PrivateVLANType matches 3(Community) or 4(Isolated)"
+	                "then PrimaryVLANId is the VLANId of primary VLAN to which the VLAN is bound")]
+		uint16 PrimaryVLANId;
+
+		 [Description ("If PrivateVLANType matches 2(Primary)  "
+	                "then AssociatedVLANId is an array of VLANIds"
+					 " of secondary VLANs associated with the Primary VLAN"
+					)]
+		uint16 AssociatedVLANIds[];
+
+[Description ("per VLAN MAC address aging time in seconds")]
+  uint32 MACAddressAgingTime; 
+
+
+};

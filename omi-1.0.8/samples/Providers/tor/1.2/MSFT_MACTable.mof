@@ -1,0 +1,8 @@
+// ===============================================================
+//  MSFT_MACTable
+// ===============================================================
+	[Description ( "MSFT_MACTable collection of MAC Table Entries." ), 
+	Version ( ".7" )]
+class MSFT_MACTable : CIM_SystemSpecificCollection 
+{
+};

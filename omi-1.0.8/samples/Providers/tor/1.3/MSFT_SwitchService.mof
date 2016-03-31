@@ -1,0 +1,848 @@
+// ===============================================================
+//  MSFT_SwitchService
+// ===============================================================
+	[Description ( "MSFT_SwitchService description." ), 
+	Version ( "0.7" )]
+class MSFT_SwitchService : CIM_Service
+
+{
+[Description ( 
+          "Defines and assigns a protcol endpoint subclass to a physical or virtual port or interface,"
+		 "for example an instance of CIM_EthernetPort or MSFT_Subinterface\n"
+          "Input that is not completely specified may be filled out "
+          "with default values." ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 AddProtocolEndpoint(
+         [Description ( 
+             "Reference to the targeted interface. This instance of CIM_ComputerSystem, CIM_EthernetPort, or a NetworkVlan"
+              )]
+      CIM_ManagedElement REF TargetInterface, 
+ 
+         [Description ( 
+             "A string an containing an embedded "
+             "instance of class-subclass of "
+             "CIM_ProtocolEndpoint that describes "
+             "the aspects of a protocol endpoint. For example"
+			 "CIM_VLANEndPoint will be associated with an interfaces CIM_LanEndpoint using the association"
+			 "CIM_BindsToLANEndpoint" ), 
+          EmbeddedInstance ( "CIM_ProtocolEndpoint" ) 
+         ]
+      string ProtocolEndpoint[], 
+
+	         [Description ( 
+             "An array of strings each containing an embedded "
+             "instance of class-subclass of "
+             "CIM_SettingData that describes "
+             "are associated with the new protocol endpoint  "
+             "Generally these should be associated to the"
+			  "CIM_ProtocolEndpoint with an Instance of CIM_ElementSettingData" 
+			  "An example is the association of CIM_VLANEndpointSettingdata with CIM_VLANEndpoint" ), 
+          EmbeddedInstance ( "CIM_SettingData" ) 
+           ]
+      string EndPointSettings[], 
+         
+         [In ( false ), Out, Description ( 
+             "If a the assignment of a protocol endpoint is successfully, "
+             "reference to an instances of class "
+             "CIM_ProtocolEndpoint that represents the newly "
+             "defined Endpoints are returned." )]
+      CIM_ProtocolEndpoint REF ResultingEndpoint[],
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	     [Description ( 
+          "removes a protcol endpoint subclass from a physical or virtual port or interface,"
+		 "for example an instance of CIM_EthernetPort or MSFT_Subinterface\n"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 RemoveProtocolEndpoint(
+         [Description ( 
+             "Reference to the targeted instance of CIM_ProtocolEndpoint. "
+              )]
+      CIM_ProtocolEndpoint REF Endpoint,
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+
+
+   [Description ( 
+          "Adds one or more VLANs to the targeted switch"), 
+        ValueMap { "0",  
+		"4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 AddVLAN(
+         [Description ( 
+             "Reference to the targeted instance of CIM_ComputerSystem. "
+              )]
+      CIM_ComputerSystem REF TargetedSwitch,
+
+         [Description ( 
+             "A string an containing an embedded "
+             "instance of class-subclass of "
+             "NetworkVLan Class containing at least the VLANId property set." ), 
+          EmbeddedInstance ( "MSFT_NetworkVLAN" ) 
+         ]
+      string NetworkVLAN[], 
+
+	         [In ( false ), Out, Description ( 
+             "Reference to the new NetworkVLAN instances" )]
+      MSFT_NetworkVLAN REF VLAN[],
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+[Description ( 
+          "removes one or more NetworkVLANs"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 RemoveVLAN(
+         [Description ( 
+             "Reference to the targeted instance of MSFT_NetworkVLAN. "
+              )]
+      MSFT_NetworkVLAN REF VLAN[],
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	
+
+	  	  [Description ( 
+          "enable one or more NetworkVLANs"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 EnableVLAN(
+         [Description ( 
+             "Reference to the targeted instance of MSFT_NetworkVLAN to Enable. "
+              )]
+      MSFT_NetworkVLAN REF VLAN[],
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	  	  	  [Description ( 
+          "disable one or more NetworkVLANs"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 DisableVLAN(
+         [Description ( 
+             "Reference to the targeted instance of MSFT_NetworkVLAN to Enable. "
+              )]
+      MSFT_NetworkVLAN REF VLAN[],
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+
+	  [Description ( 
+          "Set state of NetworkVLAN"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 SetVLANState(
+         [Description ( 
+             "Reference to the targeted instance of MSFT_NetworkVLAN to Enable. "
+              )]
+      MSFT_NetworkVLAN REF VLAN,
+
+      [Description ( 
+          "Set state of NetworkVLAN"
+           ), 
+       ValueMap { "0",  "1" 
+           }, 
+       Values { "Active", "Suspended" }]
+       uint32 State,	      
+
+	   [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+[Description ( 
+          " Create a Link aggregation," ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 CreateLinkAggregation(
+          
+ 
+         [Description ( 
+             "A string an containing an embedded "
+             "instance of class-subclass of "
+             "LinkAggregation that describes "
+             "the aspects of the Link aggregation. " ), 
+          EmbeddedInstance ( "MSFT_LinkAggregation" ) 
+         ]
+      string LinkAggregation[], 
+
+	     [Description ( 
+             "An array of references to instance of CIM_EthernetPort that "
+             "will be used to form the aggregation " )     
+     ]
+      CIM_EthernetPort ref EthernetPort[], 
+         
+         [In ( false ), Out, Description ( 
+             "If a the creation of a Link Aggregation is successfully, "
+             "reference to the instance of class "
+             "MSFT_LinkAggregation that was created is returned." )]
+      MSFT_LinkAggregation REF ResultingLinkAggregation, 
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	     [Description ( 
+          "removes a Link Aggregation"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   
+   uint32 RemoveLinkAggregation(
+         [Description ( 
+             "Reference to the targeted instance of MSFT_LinkAggregation. ")]
+      MSFT_LinkAggregation REF LinkAggregation,
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+
+[Description ( 
+          " Add an Ethernet port to a  Link aggregation," ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 AddPortToAggregation(
+          
+ 
+         [Description ( 
+             "Aggregation to which to add the Ethernet port "
+            )
+         ]
+      MSFT_LinkAggregation ref  LinkAggregation, 
+
+	         [Description ( 
+             "An array of references to instance of CIM_EthernetPort that "
+             "will be added to the Link Aggregation "
+ ) 
+         
+           ]
+      CIM_EthernetPort ref EthernetPort[], 
+         
+     
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	  	     [Description ( 
+          "removes a port from A Link Aggregation"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 RemovePortFromLinkAggregation(
+         [Description ( 
+             "Reference to the targeted instance of CIM_EthernetPort. "
+              )]
+      CIM_EthernetPort REF EthernetPort,
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	  [Description ( 
+          "Copies current configuration to startup"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 CopyCurrentToStartup(
+        
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	  	  [Description ( 
+          "Copies startup configuration to the current configuration"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 CopyStartupToCurrent(
+        
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	   [Description ( 
+          "Copies current configuration to a file"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 CopyCurrentToFile(
+    
+	
+	    [Description ( 
+             "A URI to a  file. The URI can point to a remote server, local device or interal file "
+			 "Example: tftp://10.10.1.1/sw1-run-config.bak"
+              )
+           ]
+      string FileURI,     
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	  	 [Description ( 
+          "Copies one file to another file"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 CopyFile(
+    
+	
+	    [Description ( 
+             "A URI to a  file. The URI can point to a remote server, local device or interal file "
+			 "Example: bootflash:sw1-run-config.bak"
+              )
+           ]
+      string SourceFileURI,   
+	  
+	    [Description ( 
+             "A URI to a  file. The URI can point to a remote server, local device or interal file "
+			 "Example: tftp://10.10.1.1/sw1-run-config.bak"
+              )
+           ]
+      string DestinationFileURI,    
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	  	   [Description ( 
+          "Copies startup configuration to a file"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 CopyStartupToFile(
+    
+	
+	    [Description ( 
+             "A URI to a  fil. The URI can point to a remote server, local device or interal file "
+			 "Example: tftp://10.10.1.1/startup-config.bak"
+              )
+           ]
+      string FileURI,     
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+
+
+	  	   [Description ( 
+          "Copies a file to the current configuration"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 CopyFileToCurrent(
+    
+	
+	    [Description ( 
+             "A URI to a  file. The URI can point to a remote server, local device or interal file "
+			 "Example: tftp://10.10.1.1/sw1-run-config.bak"
+              )
+           ]
+      string FileURI,     
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	  	   [Description ( 
+          "Copies a file to the startup configuration"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 CopyFileToStartup(
+    
+	
+	    [Description ( 
+             "A URI to a  file. The URI can point to a remote server, local device or interal file "
+			 "Example: tftp://10.10.1.1/startup-config.bak"
+              )
+           ]
+      string FileURI,     
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	  	  [Description ( 
+          "Clears the current configuration of the switch."
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 ClearCurrent
+   (
+        
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	  	[Description ( 
+          "Clears the startup configuration of the switch."
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 ClearStartup
+   (
+        
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	   [Description ( 
+          "Delete a file"
+           ), 
+       ValueMap { "0",  "4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 DeleteFile(
+    
+	
+	    [Description ( 
+             "A URI to a  file. The URI can point to a remote server, local device or interal file "
+			 "Example: bootflash:sw1-run-config.bak"
+              )
+           ]
+      string FileURI,     
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	 [Description ( 
+          "Creates and names a new RemoteServiceGroup and associated it with a switch Feature."
+		  "for example aaa group server tacacs+ tacacs" ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+       uint32 CreateRemoteServerGroup(
+          
+        [Description ( 
+             "A reference to the instance of the associated Feature that the server group is supporting."
+              )
+        ]
+	   MSFT_Feature Ref AssociatedFeature, 
+	  
+	   [Description ( 
+             "A string an containing an embedded "
+             "instance of class-subclass MSFT_RemoteServerGroup  a subclass of "
+             "CIM_Collection"
+              ),
+       EmbeddedInstance ( "MSFT_RemoteServerGroup" ) ]
+	   String RemoteServerGroup,        
+         
+         [In ( false ), Out, Description ( 
+             "If a the Remote Service Group creation is successfully, "
+             "reference to an instance of class "
+             "MSFT_VirtualRoutingandForwarding that represents the newly "
+             "created RemoteServerGroup is returned." )]
+         MSFT_RemoteServerGroup REF ResultingServerGroup, 
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	  [Description ( 
+          "Removes RemoteServerGroup" ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+       uint32 RemoveRemoteServerGroup(
+       
+	   [Description ( 
+             "A reference to the instance of the associated Feature that the server group is supporting."
+              )
+        ]
+	   MSFT_Feature Ref AssociatedFeature, 
+	      
+       [Description ( 
+             "A reference to the instance of the RemoteServerGroup that should be removed"
+              )
+        ]
+	   MSFT_RemoteServerGroup Ref RemoteServerGroup,         
+         
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	
+	
+	
+	  [Description ( 
+          "Defines a service access point on a switch,"
+		  "This method is used to add a Remote servers such as(Tacacs, Radius, NPT, SNMP Trap Targets ..."
+		  "or to configure a service access point such as the SNMPCommunityStrings"
+		  ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 ConfigureSeviceAccessPoint(
+         [Description ( 
+             "Reference to the host system. This generally is an instance of CIM_ComputerSystem."
+              )]
+      CIM_System REF TargetSystem, 
+
+	     [Description ( 
+             "Optional reference to a collection-group. For example a reference to MSFT_RemoteServerGroup"
+              )]
+      CIM_Collection REF Group, 
+ 
+         [Description ( 
+             "A string an containing an embedded "
+             "instance of the class-subclass of "
+             "CIM_ServiceAccessPoint" ), 
+          EmbeddedInstance ( "CIM_ServiceAccessPoint" ) 
+         ]
+      string ServiceAccessPoint, 
+
+	
+         
+         [In ( false ), Out, Description ( 
+             "If a the assignment of the service access point is successfully, "
+             "reference to the instance of class "
+             "CIM_RemoteServiceAccesspoint is returned." )]
+      CIM_ServiceAccessPoint REF ResultingServiceAccessPoint, 
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+
+	  	  [Description ( 
+          "Allows the modification of a remote access point on a computersystem,"
+		  ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 ModifySeviceAccessPoint(
+         [Description ( 
+             "Reference to the host system. This generally is an instance of CIM_ComputerSystem."
+              )]
+      CIM_System REF TargetSystem, 
+         [Description ( 
+             "Conditional reference reference to a collection-group. The condition is the ServiceAccessPoint is part of a group"
+              )]
+      CIM_Collection REF Group, 
+
+
+         [Description ( 
+             "A reference to the "
+             "instance of the class-subclass of "
+             "CIM_ServiceAccessPoint" )
+            
+         ]
+      CIM_ServiceAccessPoint Ref ServiceAccessPoint, 
+
+      [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	  	  [Description ( 
+          "Deletes a service access point on a computersystem,"
+		  ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 DeleteSeviceAccessPoint(
+         [Description ( 
+             "Reference to the host system. This generally is an instance of CIM_ComputerSystem."
+              )]
+      CIM_System REF TargetSystem, 
+     
+	  [Description ( 
+             "Conditional reference reference to a collection-group. The condition is the ServiceAccessPoint is part of a group"
+              )]
+      CIM_Collection REF Group, 
+
+         [Description ( 
+             "A reference to the "
+             "instance of the class-subclass of "
+             "CIM_ServiceAccessPoint" )
+            
+         ]
+      CIM_ServiceAccessPoint Ref ServiceAccessPoint, 
+
+      [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	  [Description ( 
+          "Applies the values contained in an embedded instance of EthernetPortAllocationSettingData" 
+		  "to an Ethernet switch port"
+		  ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 ApplyPortProfile(
+       [Description ( 
+             "Reference to the port to configure"
+              )]
+      CIM_EthernetPort REF TargetInterface, 
+ 
+       [Description ( 
+             "A string containing an embedded "
+             "instance of the class-subclass of "
+             "CIM_EthernetPortAllocationSettingData" ),
+          EmbeddedInstance ( "CIM_EthernetPortAllocationSettingData" ) 
+		  ]
+		  string PortProfile, 
+
+       [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+       CIM_ConcreteJob REF Job);
+
+
+	    [Description ( 
+          "Reloads the targeted switch"
+		  "Note this command disrupts the current operation of the switch and can end the "
+		  "the current managment session. A caller can not assume that this method will return"), 
+        ValueMap { "0",  
+		"4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 ReloadSwitch(
+         [Description ( 
+             "Reference to the targeted instance of CIM_ComputerSystem. "
+              )]
+      CIM_ComputerSystem REF TargetedSwitch,
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+	 
+	 
+	 [Description ( "SetMACAddressAgingTime"
+       ), 
+        ValueMap { "0",  
+		"4096", 
+          "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error",
+          "Method Parameters Checked - Job Started", 
+          "Method Reserved", "Vendor Specific" }]
+   uint32 SetMACAddressAgingTime(
+         [Description ( 
+             "Aging Time in seconds. a value of 0 disables MAC address aging"
+              )]
+      uint32 AgingTime,
+
+    [Description ( 
+             "Optional reference to a VLAN. If null then the aging time applies to all vlans "
+              )]
+      MSFT_NetworkVLAN REF VLAN,
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+
+
+
+[Description ( 
+          "Adds a a Static entry to a MAC address table"
+		   ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 AddStaticMACTableEntry(
+         [Description ( 
+             "Reference to the targeted  MAC Address table"
+              )]
+      MSFT_MACTable           REF MACTable, 
+ 
+         [Description ( 
+             "A string an containing one or more embedded "
+             "instances of class-subclass of "
+             "MSFT_MACTableEntry  "
+           ), 
+          EmbeddedInstance ( "MSFT_MACTableEntry" ) 
+         ]
+      string MACTableEntry, 
+
+         
+         [In ( false ), Out, Description ( 
+             "If the static MAC address entry is  successfully, "
+             "a reference to an instance of class "
+             "CIM_MACTableEntry that represents the newly "
+             "defined entry is returned." )]
+     MSFT_MACTableEntry REF ResultingEntry, 
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	  [Description ( 
+          "Clears static MAC address entry from a MAC address table"
+		 ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 ClearStaticMACTableEntry(
+         [Description ( 
+             "Reference to the targeted MAC address table"
+              )]
+      MSFT_MACTable           REF MACTable, 
+ 
+         [Description ( 
+             "A Reference to the entry to delete"
+           )
+         ]
+      MSFT_MACTableEntry REF MACTableEntry, 
+
+    
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+	    [Description ( 
+          "Clears all of the dynamic MAC address entries from the MAC address table."
+		   ),
+       ValueMap { "0",  "4096", "4097..32767", "32768..65535" }, 
+       Values { "Completed with No Error", "Job Started", 
+	             "Method Reserved", "Vendor Specific" }]
+   uint32 ClearDynamicMACTableEntries(
+         [Description ( 
+             "Reference to the MAC address table to clear the dynamic entries."
+              )]
+      MSFT_MACTable           REF MACTable, 
+ 
+     
+  
+
+         [In ( false ), Out, Description ( 
+             "If the operation is long running, then optionally "
+             "a job may be returned." )]
+      CIM_ConcreteJob REF Job);
+
+
+};

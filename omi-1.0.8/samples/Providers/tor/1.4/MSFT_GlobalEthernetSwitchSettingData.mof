@@ -1,0 +1,23 @@
+// ===============================================================
+//  MSFT_GlobalEthernetSwitchSettingData
+// ===============================================================
+	[Description ( "MSFT_GlobalEthernetSwitchSettingData description." ), 
+	Version ( ".7" )]
+class MSFT_GlobalEthernetSwitchSettingData : CIM_SettingData 
+{
+
+boolean IsIPRoutingEnable;
+
+boolean IsIpMulticastRoutingEnable;
+
+
+[Description ("Notice send as part of the interface")]
+ String Banner;
+
+ [Description ( 
+          "Boolean indicating whether the Banner is enable." )]
+   boolean BannerIsEnabled = false;
+
+
+
+};

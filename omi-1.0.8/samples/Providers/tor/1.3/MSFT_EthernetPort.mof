@@ -1,0 +1,89 @@
+// ===============================================================
+//  MSFT_EthernetPort
+// ===============================================================
+	[Description ( "This specialization adds the properties required to support LACP, SNMP and lldp." ), 
+	Version ( "0.7" )]
+class MSFT_EthernetPort : CIM_EthernetPort 
+{
+
+
+   [Description ( "Port Priority." )]
+      uint16 LACPPortPriority;
+
+   [Description ( 
+          "Port channel mode" ), 
+       ValueMap { "1", "2", "3", "4" }, 
+       Values { "Active", "Passive", "On", "Off"}]
+   uint16 LACPMode = 3;
+
+   [Description ( "Channel Group Number." )]
+       uint16 LACPGroupNumber;
+
+	    [Description ( 
+          "Spanning Tree Port Type" ), 
+       ValueMap { "1", "2", "3" }, 
+       Values { "Normal", "Network", "Edge"}]
+   uint16 SpanningTreePortType =1;
+
+    [Description ( "Link Layer Discovery Protocol Transmit Enable" )]
+   boolean LLDPTransmitEnabled;
+
+    [Description ( "Link Layer Discovery Protocol Receive Enable" )]
+   boolean LLDPReceiveEnabled;
+
+    [Description ( "Cisco Discovery Protocol Enable" )]
+   boolean cdpEnabled;
+
+   boolean SNMPLinkStatusTrapEnabled;
+
+
+   [Description ( 
+          "The LLDP Remote Port ID is populated with the MAC addresses or port names      "
+		  "discovered on the port as the result of LLDP advertisements"
+		  "from neighbor ports on the link"
+          "If it is of the type MAC address it should be formatted as twelve "
+          "hexadecimal digits (e.g., \"010203040506\"), with each "
+          "pair representing one of the six octets of the MAC "
+          "address in \"canonical\" bit order according to RFC "
+          "2469." ), 
+       
+	    ArrayType ( "Indexed" ), 
+       ModelCorrespondence { 
+          "MSFT_EthernetPort.LLDPRemotePortIDType" }]
+   string LLDPRemotePortID[];
+
+  [Description ( 
+          "Used to indicate the type of remote port ID, "
+          "typically a MAC or port name" ), 
+       ValueMap { "0", "1", "2", "3",  "..", "0x8000..0xFFFF" }, 
+       Values { "Unknown", "Other", "MAC address", "Port Name", 
+           "DMTF Reserved", "Vendor Reserved" }, 
+       ArrayType ( "Indexed" ), 
+       ModelCorrespondence { 
+          "MSFT_EthernetPort.LLDPRemotePortID" }]
+   uint16 LLDPRemotePortIDType[];
+
+
+    [Description ( 
+          "The lldp Remote Device ID is populated with the IP addresses or host names"
+		  "discovered on the port as the result of LLDP advertisements"
+		  "from neighbor ports on the link" 
+        ), 
+	   ArrayType ( "Indexed" ), 
+       ModelCorrespondence { 
+          "MSFT_EthernetPort.LLDPRemotePortDeviceType" }
+       ]
+   string LLDPRemoteDeviceID[];
+
+  [Description ( 
+          "Used to indicate the type of remote device ID, "
+          "typically a host name or IP address" ), 
+       ValueMap { "0", "1", "2", "3",  "..", "0x8000..0xFFFF" }, 
+       Values { "Unknown", "Other", "IP address", "Host Name", 
+           "DMTF Reserved", "Vendor Reserved" }, 
+       ArrayType ( "Indexed" ), 
+       ModelCorrespondence { 
+          "MSFT_EthernetPort.LLDPRemotePortID" }]
+   uint16 LLDPRemoteDeviceIDType[];
+
+};
