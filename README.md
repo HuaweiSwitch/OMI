@@ -28,7 +28,7 @@ Example usage
 
 An example of PowerShell script for CE switch is followed. The script aimed at creating a new global session, and deliver some parameters.
 
-#TestCase 0 Begin
+TestCase 0 Begin
 
 	$username = "xxxx"
 	$password = "xxxxxx"
@@ -38,7 +38,7 @@ An example of PowerShell script for CE switch is followed. The script aimed at c
 	$options = New-CimSessionOption -UseSsl -SkipCACheck
 	$Session = New-CimSession -ComputerName P4080RDB -Authentication Basic -Credential $Cred -SessionOption $options
 
-#TestCase 0 End
+TestCase 0 End
 
 References
 
